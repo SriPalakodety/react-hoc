@@ -1,15 +1,26 @@
-import React from 'react'
-import HOC from '../containers/HOC';
+import React, { Component } from 'react';
 
-const HoverCount = (props) => {
-    const {count, name, incrementCounter} = props;
+class HoverCount extends Component<{ name: string }, { count: number }> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      count: 0,
+    };
+  }
+
+  incrementCounter = () => {
+    this.setState(prevState => {
+      return { count: prevState.count + 1 };
+    });
+  };
+  render() {
+    const { name } = this.props;
     return (
-        <div>
-            {name} <span onMouseOver={incrementCounter}>Hovered on {count} times</span>
-        </div>
-    )
+      <div>
+        {name} <span onMouseOver={this.incrementCounter}>Hovered on {this.state.count} times</span>
+      </div>
+    );
+  }
 }
 
-const EnhancedHoverCount = HOC(HoverCount);
-
-export default EnhancedHoverCount;
+export default HoverCount;
